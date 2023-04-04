@@ -19,6 +19,6 @@ export default class PlacesList extends HTMLElement {
             return `<single-place place='${JSON.stringify(place)}'></single-place>`;
         }).join("");
 
-        this.innerHTML = `<h1>Places</h1>${list}`;
+        this.innerHTML = `<h1>Places</h1><a href='#form'>Skapa ny plats</a>${list}`;
     }
-};
+}
