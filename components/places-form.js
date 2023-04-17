@@ -1,3 +1,5 @@
+import auth from "../models/auth.js";
+
 export default class PlacesForm extends HTMLElement {
     constructor() {
         super();
@@ -9,7 +11,8 @@ export default class PlacesForm extends HTMLElement {
         const response = await fetch("http://localhost:8545/places", {
             body: JSON.stringify(this.place),
             headers: {
-              'content-type': 'application/json'
+              'content-type': 'application/json',
+              'x-access-token': auth.token,
             },
             method: 'POST'
         });
@@ -17,9 +20,15 @@ export default class PlacesForm extends HTMLElement {
         const result = await response.json();
 
         console.log(result);
+
+        location.hash = "";
     }
 
     connectedCallback() {
+        if (!auth.token) {
+            location.hash = "login";
+        }
+
         let form = document.createElement("form");
 
         form.addEventListener("submit", (event) => {
@@ -104,23 +113,23 @@ export default class PlacesForm extends HTMLElement {
             };
         });
 
-        let labelUser = document.createElement("label");
-
-        labelUser.classList.add(".input-label");
-        labelUser.textContent = "Användare";
-
-        let inputUser = document.createElement("input");
-
-        inputUser.setAttribute("type", "number");
-        inputUser.setAttribute("required", "required");
-        inputUser.classList.add("input");
-
-        inputUser.addEventListener("input", (event) => {
-            this.place = {
-                ...this.place,
-                user_id: parseInt(event.target.value),
-            };
-        });
+        // let labelUser = document.createElement("label");
+        //
+        // labelUser.classList.add(".input-label");
+        // labelUser.textContent = "Användare";
+        //
+        // let inputUser = document.createElement("input");
+        //
+        // inputUser.setAttribute("type", "number");
+        // inputUser.setAttribute("required", "required");
+        // inputUser.classList.add("input");
+        //
+        // inputUser.addEventListener("input", (event) => {
+        //     this.place = {
+        //         ...this.place,
+        //         user_id: parseInt(event.target.value),
+        //     };
+        // });
 
 
 
@@ -128,6 +137,7 @@ export default class PlacesForm extends HTMLElement {
         let submitButton = document.createElement("input");
 
         submitButton.setAttribute("type", "submit");
+        submitButton.textContent = "Skapa plats";
 
         submitButton.classList.add("button", "blue-button");
 
@@ -143,8 +153,8 @@ export default class PlacesForm extends HTMLElement {
         form.appendChild(labelLong);
         form.appendChild(inputLong);
 
-        form.appendChild(labelUser);
-        form.appendChild(inputUser);
+        // form.appendChild(labelUser);
+        // form.appendChild(inputUser);
 
         form.appendChild(submitButton);
 

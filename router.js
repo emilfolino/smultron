@@ -12,6 +12,14 @@ export default class Router extends HTMLElement {
             "form": {
                 view: "<places-form></places-form>",
                 name: "Formulär",
+            },
+            "login": {
+                view: "<login-form></login-form>",
+                name: "Login",
+            },
+            "register": {
+                view: "<register-form></register-form>",
+                name: "Registrera",
             }
         };
     }
