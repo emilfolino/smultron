@@ -5,6 +5,8 @@ export default class PlacesForm extends HTMLElement {
         super();
 
         this.place = {};
+        this.latitude = "";
+        this.longitude = "";
     }
 
     async createPlace() {
@@ -19,12 +21,27 @@ export default class PlacesForm extends HTMLElement {
 
         const result = await response.json();
 
-        console.log(result);
-
         location.hash = "";
     }
 
     connectedCallback() {
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                this.latitude = position.coords.latitude;
+                this.longitude = position.coords.longitude;
+
+                this.place = {
+                    ...this.place,
+                    latitude: this.latitude,
+                    longitude: this.longitude,
+                };
+
+                this.render();
+            });
+        }
+    }
+
+    render() {
         if (!auth.token) {
             location.hash = "login";
         }
@@ -85,14 +102,11 @@ export default class PlacesForm extends HTMLElement {
         inputLat.setAttribute("type", "number");
         inputLat.setAttribute("required", "required");
         inputLat.setAttribute("step", "0.000000001");
+        inputLat.setAttribute("disabled", true);
+        inputLat.value = this.latitude;
+
         inputLat.classList.add("input");
 
-        inputLat.addEventListener("input", (event) => {
-            this.place = {
-                ...this.place,
-                latitude: parseFloat(event.target.value),
-            };
-        });
 
         let labelLong = document.createElement("label");
 
@@ -105,13 +119,9 @@ export default class PlacesForm extends HTMLElement {
         inputLong.setAttribute("required", "required");
         inputLong.setAttribute("step", "0.000000001");
         inputLong.classList.add("input");
+        inputLong.setAttribute("disabled", true);
+        inputLong.value = this.longitude;
 
-        inputLong.addEventListener("input", (event) => {
-            this.place = {
-                ...this.place,
-                longitude: parseFloat(event.target.value),
-            };
-        });
 
         // let labelUser = document.createElement("label");
         //

@@ -20,6 +20,10 @@ export default class Router extends HTMLElement {
             "register": {
                 view: "<register-form></register-form>",
                 name: "Registrera",
+            },
+            "map": {
+                view: "<map-view></map-view>",
+                name: "Karta",
             }
         };
     }

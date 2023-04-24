@@ -20,3 +20,8 @@ single-place div {
     flex-direction: column;
     width: 48%;
 }
+
+.map {
+    width: 100%;
+    height: 320px;
+}

@@ -5,6 +5,7 @@ import PlacesForm from "./components/places-form.js";
 import SinglePlace from "./components/single-place.js";
 import LoginForm from "./components/login-form.js";
 import RegisterForm from "./components/register-form.js";
+import MapView from "./components/map-view.js";
 
 customElements.define("router-outlet", Router);
 
@@ -13,3 +14,4 @@ customElements.define("single-place", SinglePlace);
 customElements.define("places-form", PlacesForm);
 customElements.define("login-form", LoginForm);
 customElements.define("register-form", RegisterForm);
+customElements.define("map-view", MapView);
