@@ -6,7 +6,7 @@ export default class PlacesList extends HTMLElement {
     }
 
     async connectedCallback() {
-        const response = await fetch("http://localhost:8545/places");
+        const response = await fetch("https://smultron-backend.emilfolino.se/places");
         const result = await response.json();
 
         this.places = result.data;

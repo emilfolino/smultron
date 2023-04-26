@@ -10,7 +10,7 @@ export default class PlacesForm extends HTMLElement {
     }
 
     async createPlace() {
-        const response = await fetch("http://localhost:8545/places", {
+        const response = await fetch("https://smultron-backend.emilfolino.se/places", {
             body: JSON.stringify(this.place),
             headers: {
               'content-type': 'application/json',

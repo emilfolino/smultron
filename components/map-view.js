@@ -1,6 +1,7 @@
 /* global L */
 
 import "../leaflet/leaflet.min.js";
+import "../leaflet/leaflet.markercluster.min.js";
 
 export default class MapView extends HTMLElement {
     constructor() {
@@ -11,7 +12,7 @@ export default class MapView extends HTMLElement {
     }
 
     async connectedCallback() {
-        const response = await fetch("http://localhost:8545/places");
+        const response = await fetch("https://smultron-backend.emilfolino.se/places");
         const result = await response.json();
 
         this.places = result.data;
@@ -38,11 +39,15 @@ export default class MapView extends HTMLElement {
     }
 
     renderMarkers() {
+        let markers = L.markerClusterGroup();
+
         this.places.forEach((place) => {
             let coordinates = [place.latitude, place.longitude];
 
-            L.marker(coordinates).bindPopup(`<h2>${place.name}</h2><img src="${place.url}" width="150" height="150">`).addTo(this.map);
+            markers.addLayer(L.marker(coordinates).bindPopup(`<h2>${place.name}</h2><img src="${place.url}" width="150" height="150">`));
         });
+
+        this.map.addLayer(markers);
     }
 
     renderLocation() {
