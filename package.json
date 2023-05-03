@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@uploadcare/upload-client": "^6.6.1",
     "leaflet": "^1.9.3",
     "leaflet.markercluster": "^1.5.3"
   }
